@@ -10,6 +10,8 @@ public class Manager_Main : MonoBehaviour
 
     // Player
     public float PLAYER_MOVE_SPEED = 0f;
+    public float PLAYER_BULLET_SPEED = 0f;
+    public float PLAYER_BULLET_CD_SEC = 0.1f;
 
     // Dot
 

@@ -165,6 +165,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PLAYER_MOVE_SPEED: 1000
+  PLAYER_BULLET_SPEED: 10
+  PLAYER_BULLET_CD_SEC: 0.1
 --- !u!1001 &525953410
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -241,6 +243,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Wall_East
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919192931391681554, guid: 9fde64dfe0d4a2a4d90fec8805843c75,
+        type: 3}
+      propertyPath: m_TagString
+      value: Lava
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fde64dfe0d4a2a4d90fec8805843c75, type: 3}
@@ -326,6 +333,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Wall_South
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919192931391681554, guid: 9fde64dfe0d4a2a4d90fec8805843c75,
+        type: 3}
+      propertyPath: m_TagString
+      value: Lava
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fde64dfe0d4a2a4d90fec8805843c75, type: 3}
@@ -728,6 +740,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall_West
       objectReference: {fileID: 0}
+    - target: {fileID: 4919192931391681554, guid: 9fde64dfe0d4a2a4d90fec8805843c75,
+        type: 3}
+      propertyPath: m_TagString
+      value: Lava
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fde64dfe0d4a2a4d90fec8805843c75, type: 3}
 --- !u!4 &1897682914 stripped
@@ -887,6 +904,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall_North
       objectReference: {fileID: 0}
+    - target: {fileID: 4919192931391681554, guid: 9fde64dfe0d4a2a4d90fec8805843c75,
+        type: 3}
+      propertyPath: m_TagString
+      value: Lava
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fde64dfe0d4a2a4d90fec8805843c75, type: 3}
 --- !u!1001 &7391806307252393907
@@ -896,6 +918,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1039078759347610370, guid: a44a841fb98477944be041e81921549c,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391806307252393909, guid: a44a841fb98477944be041e81921549c,
+        type: 3}
+      propertyPath: prefab_bullet
+      value: 
+      objectReference: {fileID: 2018704666296168856, guid: b28e70a6d844a6e489d9c3f6ed7d1191,
+        type: 3}
     - target: {fileID: 7391806308166222360, guid: a44a841fb98477944be041e81921549c,
         type: 3}
       propertyPath: m_Name
@@ -904,7 +937,7 @@ PrefabInstance:
     - target: {fileID: 7391806308166222366, guid: a44a841fb98477944be041e81921549c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7391806308166222366, guid: a44a841fb98477944be041e81921549c,
         type: 3}
@@ -955,16 +988,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8985240356694392573, guid: a44a841fb98477944be041e81921549c,
-        type: 3}
-      propertyPath: m_LinearDrag
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8985240356694392573, guid: a44a841fb98477944be041e81921549c,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a44a841fb98477944be041e81921549c, type: 3}

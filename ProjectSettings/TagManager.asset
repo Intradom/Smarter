@@ -7,6 +7,8 @@ TagManager:
   - Manager_Main
   - Manager_Menu
   - Dot
+  - Bullet
+  - Lava
   layers:
   - Default
   - TransparentFX
