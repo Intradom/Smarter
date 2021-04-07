@@ -20,6 +20,18 @@ public class Behavior_Dot : MonoBehaviour
         public bool can_shoot;
     }
 
+    // Different types of entities the Dot can detect with its rays
+    private enum NN_Detect
+    {
+        Nothing,
+        Player,
+        Ally, // Cloned of itself
+        Enemy, // Dot, but not a clone of itself
+        Lava,
+        Bullet,
+        size
+    }
+
     private enum NN_Action
     {
         Move_Speed, // Percentage of "move_speed"
@@ -39,6 +51,8 @@ public class Behavior_Dot : MonoBehaviour
     [SerializeField] private float offset = 0f;
 
     // NN Params
+    private int NN_num_rays = 0;
+    private float NN_ray_length = 0f;
     private int NN_input_length = 0;
     private int NN_hidden_layers = 0;
     private int NN_hidden_layer_length = 0;
@@ -136,22 +150,51 @@ public class Behavior_Dot : MonoBehaviour
 
     private List<float> GetNNInput()
     {
-        List<float> ray_hit_dists = new List<float>(NN_input_length);
-        for (int i = 0; i<NN_input_length; ++i)
+        List<float> NN_input = new List<float>(NN_input_length);
+        for (int i = 0; i< NN_num_rays; ++i)
         {
-            float ray_dir = ((Mathf.PI * 2) / NN_input_length) * i;
+            // Add LENGTH of hit
+            float ray_dir = ((Mathf.PI * 2) / NN_num_rays) * i;
             Vector2 dir_vec = new Vector2(Mathf.Cos(ray_dir), Mathf.Sin(ray_dir));
 
-            RaycastHit2D hit = Physics2D.Raycast((Vector2)this.transform.position + dir_vec * offset, dir_vec, Mathf.Infinity, LayerMask.GetMask(layer_mask_interactable));
-            ray_hit_dists.Add(hit.distance);
+            RaycastHit2D hit = Physics2D.Raycast((Vector2)this.transform.position + dir_vec * offset, dir_vec, NN_ray_length, LayerMask.GetMask(layer_mask_interactable));
+            NN_input.Add(hit.distance);
 
             if (hit.collider)
             {
+                // Add TYPE of hit
+                switch (hit.transform.tag)
+                {
+                    case "Player":
+                        NN_input.Add((float)NN_Detect.Player);
+                        break;
+                    case "Dot":
+                        // Determine friend or foe through color
+                        if (ref_self_sprite_rend.color == hit.transform.GetComponent<SpriteRenderer>().color)
+                        {
+                            NN_input.Add((float)NN_Detect.Ally);
+                        }
+                        else
+                        {
+                            NN_input.Add((float)NN_Detect.Enemy);
+                        }
+                        break;
+                    case "Lava":
+                        NN_input.Add((float)NN_Detect.Lava);
+                        break;
+                    case "Bullet":
+                        NN_input.Add((float)NN_Detect.Bullet);
+                        break;
+                }
                 // Rays only show up in Scene view
                 Debug.DrawRay((Vector2)this.transform.position + dir_vec* offset, dir_vec* hit.distance, Color.yellow);
             }
+            else
+            {
+                NN_input.Add((float)NN_Detect.Nothing);
+            }
         }
-        return ray_hit_dists;
+        return NN_input;
     }
 
     private List<float> FF_Pass(List<float> input)
@@ -196,7 +239,9 @@ public class Behavior_Dot : MonoBehaviour
 
     private void Start()
     {
-        NN_input_length = Manager_Main.Instance.DOT_NUM_RAYS;
+        NN_num_rays = Manager_Main.Instance.DOT_NUM_RAYS;
+        NN_ray_length = Manager_Main.Instance.DOT_RAY_LENGTH;
+        NN_input_length = NN_num_rays * 2; // Ray length and TYPE of ray
         NN_hidden_layers = Manager_Main.Instance.DOT_HIDDEN_LAYERS;
         NN_hidden_layer_length = Manager_Main.Instance.DOT_HIDDEN_LAYER_LENGTH;
 
@@ -222,7 +267,7 @@ public class Behavior_Dot : MonoBehaviour
         float move_angle = OutToAngle(NN_out[(int)NN_Action.Move_Direction]);
         float move_x = NN_out[(int)NN_Action.Move_Speed] * data.move_speed * Mathf.Cos(move_angle);
         float move_y = NN_out[(int)NN_Action.Move_Speed] * data.move_speed * Mathf.Sin(move_angle);
-        ref_self_rbody.AddForce(new Vector2(move_x, move_y) * Time.deltaTime);
+        ref_self_rbody.velocity = new Vector2(move_x, move_y);
 
         // Shooting
         if (data.can_shoot && NN_out[(int)NN_Action.Move_Speed] > 0f) // Shoot desired

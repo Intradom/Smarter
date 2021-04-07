@@ -25,6 +25,7 @@ public class Manager_Main : MonoBehaviour
     public float DOT_DUP_CD_MIN = 0f;
     public float DOT_DUP_CD_MAX = 0f;
     public int DOT_NUM_RAYS = 0;
+    public float DOT_RAY_LENGTH = 0f;
     public int DOT_HIDDEN_LAYERS = 0;
     public int DOT_HIDDEN_LAYER_LENGTH = 0;
 
