@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2018704666296168839}
   - component: {fileID: 6547400994188591732}
   - component: {fileID: 4237105366129135048}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.01
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -146,6 +146,4 @@ MonoBehaviour:
   ref_self_rbody: {fileID: 6547400994188591732}
   tags_destroy:
   - Lava
-  - Player
-  - Dot
   - Bullet

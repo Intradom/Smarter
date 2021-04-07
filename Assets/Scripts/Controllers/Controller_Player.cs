@@ -25,7 +25,7 @@ public class Controller_Player : MonoBehaviour
 
         // Shooting
         float e_time = Time.time - last_shot_time;
-        if (Input.GetButton("Fire1") && e_time > Manager_Main.Instance.PLAYER_BULLET_CD_SEC)
+        if (Input.GetButton("Fire1") && e_time > Manager_Main.Instance.PLAYER_BULLET_CD)
         {
             float bullet_dev = ref_bullet_spawn.radius;
             Vector2 bullet_offset = new Vector2(Random.Range(-1f, 1f) * bullet_dev, Random.Range(-1f, 1f) * bullet_dev);
